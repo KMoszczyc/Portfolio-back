@@ -20,12 +20,16 @@ async function sendEmail(contactForm) {
         }
     });
 
+    const output = `
+        <h3>You have a new contact request from: ${contactForm.email}</h3>
+        <span style="white-space: pre-line">${contactForm.message}</span>
+        ` 
+
     let info = await transporter.sendMail({
-        from: contactForm.email, // sender address
+        from: `Contact <${contactForm.email}>`, // sender address
         to: 'kamil.moszczyc@gmail.com', // list of receivers
         subject: contactForm.subject, // Subject line
-        text:  contactForm.message, // plain text body
-        html:  contactForm.message // html body
+        html: output, // html body
     });
     
       console.log("Message sent: %s", info.messageId);
